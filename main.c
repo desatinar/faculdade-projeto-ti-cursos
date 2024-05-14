@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <locale.h>
 
-void cabecalho() {
+void cabecalho(){
   printf("\n");
   printf("\x1b[31m");
   printf("+---------------------------------------------+\n");
@@ -10,7 +10,7 @@ void cabecalho() {
   printf("\n\x1b[0m"); // Reseta a cor
 }
 
-void menu() {
+void menu(){
   printf("\x1b[36m");
   printf("+=============================================+\n");
   printf("|  1 - Cadastrar Aluno                        |\n");
@@ -25,20 +25,30 @@ void menu() {
   printf("Opção: ");
 }
 
-void limparBuffer() {
+void limparBuffer(){
+  int caracter;
   if(getchar() != '\n'){
-    while(getchar() != '\n');
+    while((caracter = getchar()) != '\n' && caracter != EOF);
     }
 }
 
-int main() {
+int main(){
   setlocale(LC_ALL, "Portuguese");
-  int opcMenu = 9;
+  int opcMenu;
 
   do {
     cabecalho();
     menu();
-    scanf("%d", &opcMenu);
+    //retorna 1 se for um número e 0 se não for
+    int input = scanf("%d", &opcMenu);
+
+    if(input != 1){
+      printf("Insira um número entre 0 e 6.\n");
+      limparBuffer();
+      opcMenu = 9;
+      continue;
+    }
+
     limparBuffer();
 
     switch(opcMenu){
